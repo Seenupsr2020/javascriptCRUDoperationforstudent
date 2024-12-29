@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>student-CRUD with array</title>
+</head>
+<style>
+    .errormessage {
+        color: red;
+    }
+
+    .btn-claass1 {
+        color: white;
+        background-color: red;
+    }
+
+    .btn-claass2 {
+        color: white;
+        background-color: blue;
+    }
+</style>
+
+<body>
+    <form action="" id="myform">
+        <label for="">Name:</label>
+        <input type="text" name="" id="name">
+        <div id="errormsg" class="errormessage"></div>
+        <br>
+        <label for="age">Age:</label>
+        <input type="text" name="" id="age">
+        <div id="erroragemsg" class="errormessage"></div>
+        <br>
+        <label for="">Gender:</label>
+        <input type="radio" name="gender" value="male" id="">Male
+        <input type="radio" name="gender" value="female" id="">Female
+        <input type="radio" name="gender" value="others" id="">Others
+        <div id="rederror" class="errormessage"></div>
+        <br>
+        <label for="">Hobbies</label>
+        <input type="checkbox" name="hob" value="playinggames">Playing Games
+        <input type="checkbox" name="hob" value="reading">Reading
+        <input type="checkbox" name="hob" value="writing">Writing
+        <div id="hobbiemsg" class="errormessage"></div>
+        <br>
+        <label for="">Branches:</label>
+        <select id="branches">
+            <option value="">Select Branch</option>
+            <option value="Biology">Biology</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Arts & Science">Arts & Science</option>
+        </select>
+        <div id="branchmsg" class="errormessage"></div>
+        <br>
+
+        <label for="">RollNo:</label>
+        <input type="text" name="" id="rollnumber">
+        <div id="errormmessagerollno" class="errormessage"></div>
+        <br>
+        <label for="">Mark1</label>
+        <input type="text" name="" id="marks1">
+        <div id="mark1errormessage" class="errormessage"></div>
+        <br>
+        <label for="">Mark2</label>
+        <input type="text" name="" id="marks2">
+        <div id="mark2errormessage" class="errormessage"></div>
+        <br>
+        <label for="">Mark3</label>
+        <input type="text" name="" id="marks3">
+        <div id="mark3errormessage" class="errormessage"></div>
+        <br>
+        <label for="">Total:</label>
+        <input type="text" name="" id="total" readonly="readonly">
+        <br><br>
+        <label for="">Average:</label>
+        <input type="text" name="" id="average" readonly="readonly">
+        <br><br>
+        <label for="">Grade:</label>
+        <input type="text" name="" id="grade" readonly="readonly">
+    </form>
+    <br><br>
+    <button onclick="submitdata()">submit</button>
+    <br>
+    <table border="1" height="50%" width="50%" id="tabledata">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Hobbies</th>
+                <th>Branches</th>
+                <th>RollNo</th>
+                <th>Mark1</th>
+                <th>Mark2</th>
+                <th>Mark3</th>
+                <th>Total</th>
+                <th>Average</th>
+                <th>Grade</th>
+
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br><br>
+    <script>
+        var studentArr = []
+        var student = {}
+        var selectedRow = null;
+        function Namevalidatiton() {
+            var name = document.getElementById("name").value;
+            var len = name.length;
+            var nameinp = /^[a-zA-Z- ]+$/;
+            if (len == 0) {
+                document.getElementById("errormsg").innerHTML = "Name is required";
+                student.name = ""
+            }
+            else if (len < 5) {
+                document.getElementById("errormsg").innerHTML = "Name is below 5 char";
+                student.name = ""
+            }
+            else if (len >= 5 && len <= 15) {
+                document.getElementById("errormsg").innerHTML = ""
+                student.name = name;
+            }
+            else if (!nameinp.test(name)) {
+                document.getElementById("errormsg").innerHTML = "Only enter alphabats and space enter";
+                student.name = "";
+            }
+
+            return student.name;
+
+        }
+
+        function Agevalidation() {
+            var age = document.getElementById("age").value;
+            var len = age.length;
+            var ageinp = /^[0-9]+$/;
+
+            if (len == 0) {
+                document.getElementById("erroragemsg").innerHTML = "Age is required";
+                student.age = ""
+            }
+            else if (age < 18) {
+                document.getElementById("erroragemsg").innerHTML = "Age is below 18";
+                student.age = ""
+            }
+            else if (age >= 18 && age <= 100) {
+                document.getElementById("erroragemsg").innerHTML = "";
+                student.age = age;
+            }
+            else if (!ageinp.test(age)) {
+                document.getElementById("erroragemsg").innerHTML = "Only enter numeric values";
+                student.age = ""
+            }
+            else {
+                document.getElementById("erroragemsg").innerHTML = "Age is above 100";
+                student.age = ""
+            }
+            return student.age
+        }
+        function Rollnovalidation() {
+            var Rollno = document.getElementById("rollnumber").value;
+            var len = Rollno.length;
+            var RollNopattern = /^[a-zA-Z0-9_.-]*$/;
+
+            if (len == 0) {
+                document.getElementById("errormmessagerollno").innerHTML = "Required";
+                student.Rollno = "";
+            }
+            else if (len == 7) {
+                document.getElementById("errormmessagerollno").innerHTML = "";
+                student.Rollno = Rollno;
+            }
+            else if (!RollNopattern.test(Rollno)) {
+                document.getElementById("errormmessagerollno").innerHTML = "Only allow Numeric values,small letters ";
+                student.Rollno = "";
+
+            }
+            else {
+                document.getElementById("errormmessagerollno").innerHTML = "Enter 7 digit Rollnumber";
+                student.Rollno = "";
+
+            }
+            return student.Rollno
+        }
+
+        function gendervalidation() {
+            var gender = document.getElementsByName("gender");
+            var selectedgender = ""
+            for (i = 0; i < gender.length; i++) {
+                if (gender[i].checked) {
+                    selectedgender = gender[i].value
+                }
+            }
+            if (selectedgender) {
+                document.getElementById("rederror").innerHTML = ""
+                student.gender = selectedgender
+            }
+            else {
+                document.getElementById("rederror").innerHTML = "required"
+                student.gender = ""
+            }
+            return student.gender
+        }
+
+        // var check = [];
+        function hobbyvalidation() {
+            var check = [];
+            var d = document.getElementsByName("hob");
+            for (k = 0; k < d.length; k++) {
+                if (d[k].checked) {
+                    hobb = d[k].value;
+                    check.push(d[k].value);
+                }
+            }
+            var len = check.length;
+            if (len == 0) {
+                document.getElementById("hobbiemsg").innerHTML = "Required";
+                student.hobbies = "";
+            } else {
+                document.getElementById("hobbiemsg").innerHTML = "";
+                student.hobbies = check;
+            }
+            return student.hobbies
+        }
+
+        function branches() {
+            var branch = document.getElementById("branches").value;
+            var len = branch.length;
+            if (len == 0) {
+                document.getElementById("branchmsg").innerHTML = "Required";
+                student.branches = "";
+            } else {
+                document.getElementById("branchmsg").innerHTML = "";
+                student.branches = branch;
+            }
+            return student.branches
+        }
+        function Mark1validation() {
+            var marks = document.getElementById("marks1").value;
+            var len = marks.length;
+            var markinput = /^[1-9]?[0-9]{1}$|^100$/;
+
+            if (len == 0) {
+                document.getElementById("mark1errormessage").innerHTML = "Mark is Required";
+                student.marks = ""
+            }
+            else if (marks == 0) {
+                document.getElementById("mark1errormessage").innerHTML = "Please enter above 0";
+                student.marks = ""
+            }
+            else if (marks >= 1 && marks <= 100) {
+                document.getElementById("mark1errormessage").innerHTML = "";
+                student.marks = marks;
+            }
+            else if (marks >= 101) {
+                document.getElementById("mark1errormessage").innerHTML = "Mark is above 100"
+                student.marks = ""
+            }
+            else if (!markinput.test(marks)) {
+                document.getElementById("mark1errormessage").innerHTML = "Enter Numeric values Only"
+                student.marks = ""
+            }
+            return student.marks
+        }
+        function Mark2validation() {
+            var mark2 = document.getElementById("marks2").value;
+            var len = mark2.length;
+            var mark2input = /^[1-9]?[0-9]{1}$|^100$/;
+
+            if (len == 0) {
+                document.getElementById("mark2errormessage").innerHTML = "Mark is Required"
+                student.mark2 = "";
+            }
+            else if (mark2 == 0) {
+                document.getElementById("mark2errormessage").innerHTML = "Please enter above 0"
+                student.mark2 = "";
+            }
+            else if (mark2 >= 1 && mark2 <= 100) {
+                document.getElementById("mark2errormessage").innerHTML = ""
+                student.mark2 = mark2;
+            }
+            else if (mark2 >= 101) {
+                document.getElementById("mark2errormessage").innerHTML = "Mark is above 100"
+                student.mark2 = "";
+            }
+            else if (!mark2input.test(mark2)) {
+                document.getElementById("mark2errormessage").innerHTML = "Enter Numeric values Only"
+                student.mark2 = ""
+            }
+            return student.mark2
+        }
+        function Mark3validation() {
+            var mark3 = document.getElementById("marks3").value;
+            var len = mark3.length;
+            var mark3input = /^[1-9]?[0-9]{1}$|^100$/;
+
+            if (len == 0) {
+                document.getElementById("mark3errormessage").innerHTML = "Mark is Required"
+                student.mark3 = ""
+            }
+            else if (mark3 == 0) {
+                document.getElementById("mark3errormessage").innerHTML = "Please enter above 0"
+                student.mark3 = ""
+
+            }
+            else if (mark3 >= 1 && mark3 <= 100) {
+                document.getElementById("mark3errormessage").innerHTML = ""
+                student.mark3 = mark3;
+            }
+            else if (mark3 >= 101) {
+                document.getElementById("mark3errormessage").innerHTML = "Mark is above 100"
+                student.mark3 = ""
+
+
+            }
+            else if (!mark3input.test(mark3)) {
+                document.getElementById("mark3errormessage").innerHTML = "Enter Numeric values Only"
+                student.mark3 = ""
+
+            }
+            return student.mark3
+        }
+        function stdtotal() {
+            total = parseInt(student.marks) + parseInt(student.mark2) + parseInt(student.mark3);
+            document.getElementById("total").value = total;
+            student.total = total;
+            return student.total;
+        }
+        function stdavg() {
+            average = parseInt(parseInt(student.total) / 3);
+            document.getElementById("average").value = average;
+            student.average = average;
+            return student.average
+        }
+        function stdgrade() {
+            average = student.average;
+            if (average <= 100 && average >= 70) {
+                a = "first class";
+            }
+            else if (average < 70 && average >= 50) {
+                a = "second class";
+            }
+            else if (average < 50 && average >= 35) {
+                a = "Third class";
+            }
+            else if (average < 35 && average >= 10) {
+                a = "Fail";
+            }
+            else {
+                a = "invalid";
+            }
+            document.getElementById("grade").value = a;
+            student.grade = a;
+            return student.grade
+        }
+
+        function submitdata() {
+            student = {};
+            // console.log("objjjjstd_______", student);
+            console.log("submitted Array_____", studentArr);
+            student.name = Namevalidatiton();
+            student.age = Agevalidation();
+            student.gender = gendervalidation();
+            student.rollnovalue = Rollnovalidation();
+            // console.log( "Rollnumbersss_________",student.rollnovalue);  //rollnumber
+            student.marks = Mark1validation();
+            student.mark2 = Mark2validation();
+            student.mark3 = Mark3validation();
+            student.hobbies = hobbyvalidation();
+            student.branches = branches();
+            student.total = stdtotal();
+            student.average = stdavg();
+            student.grade = stdgrade();
+            if (student.name == "" || student.age == "" || student.Rollno == "" || student.gender == "" || student.marks == "" || student.mark2 == "" || student.mark3 == "" || student.hobbies == "" || student.branches == "") {
+
+            }
+
+            else {
+
+
+                if (selectedRow == null) {
+                    var status = false;
+                    for (m = 0; m < studentArr.length; m++) {
+                        if (studentArr[m].rollnovalue == student.rollnovalue) {
+                            status = true;
+                            break;
+
+                        }
+
+
+                    }
+
+                    if (status) {
+                        alert("Roll number is already exist...!");
+                        return;
+                    }
+                    studentArr.push(student);
+                    TableData(studentArr);
+                }
+                else {
+                    updateRecord(student);
+                }
+
+                document.getElementById("myform").reset()
+
+            }
+
+
+
+        }
+        function TableData(studentArr) {
+            studentarray = studentArr;
+            // console.log("studentarray________", studentarray);
+
+            var table = document.getElementById("tabledata").getElementsByTagName("tbody")[0];
+            table.innerHTML = ""
+            // console.log(" table.innerHTML____________", table.innerHTML );
+
+            for (i = 0; i < studentArr.length; i++) {
+                var newRow = table.insertRow(table.length);
+                newRow.insertCell(0).innerHTML = studentArr[i].name
+                newRow.insertCell(1).innerHTML = studentArr[i].age
+                newRow.insertCell(2).innerHTML = studentArr[i].gender
+                newRow.insertCell(3).innerHTML = studentArr[i].hobbies
+                newRow.insertCell(4).innerHTML = studentArr[i].branches
+                newRow.insertCell(5).innerHTML = studentArr[i].Rollno
+                newRow.insertCell(6).innerHTML = studentArr[i].marks
+                newRow.insertCell(7).innerHTML = studentArr[i].mark2
+                newRow.insertCell(8).innerHTML = studentArr[i].mark3
+                newRow.insertCell(9).innerHTML = studentArr[i].total
+                newRow.insertCell(10).innerHTML = studentArr[i].average
+                newRow.insertCell(11).innerHTML = studentArr[i].grade
+                newRow.insertCell(12).innerHTML = `<button onclick='onEdit(${studentArr[i].Rollno})' class='btn-claass1'>Edit</button>`;
+                newRow.insertCell(13).innerHTML = `<button onclick='deletefunc(${studentArr[i].Rollno})' class='btn-claass2'>Delete</button>`;
+
+
+            }
+        }
+        var updateid;//using del also
+        function onEdit(editid) {
+            console.log("__________edittttttt", editid);
+            selectedRow = editid;
+            console.log("selectedRow__________", selectedRow);
+
+            updateid = editid;
+            console.log("updateid______", updateid);
+
+            for (k = 0; k < studentArr.length; k++) {
+                if (studentArr[k].Rollno == selectedRow) {
+                    console.log("studentArr[k].Rollno______", studentArr[k].Rollno);
+                    var arr = k;
+                    console.log("arr_______", arr);
+
+                    break;
+                }
+            }
+            document.getElementById("name").value = studentArr[arr].name;
+            document.getElementById("age").value = studentArr[arr].age;
+
+            var gender = document.getElementsByName("gender");
+            for (i = 0; i < gender.length; i++) {
+                if (gender[i].value == studentArr[arr].gender) {
+                    gender[i].checked = true;
+                    // console.log("gender", gender[i].value);
+                }
+            }
+
+            document.getElementById("branches").value = studentArr[arr].branches;
+            document.getElementById("rollnumber").value = studentArr[arr].Rollno;
+            document.getElementById("marks1").value = studentArr[arr].marks;
+            document.getElementById("marks2").value = studentArr[arr].mark2;
+            document.getElementById("marks3").value = studentArr[arr].mark3;
+            document.getElementById("total").value = studentArr[arr].total;
+            document.getElementById("average").value = studentArr[arr].average;
+            document.getElementById("grade").value = studentArr[arr].grade;
+
+
+            // var checkbox = document.getElementsByName("hob");
+            // var hArray = h.split(",");
+            // // console.log("____HRRRRRRR", hArray);
+            // for (s = 0; s < checkbox.length; s++) {
+            //     console.log("_____EXPEEEE", checkbox[s].value);
+            //     var checked = false;
+            //     for (i = 0; i < hArray.length; i++) {
+            //         if (hArray[i] == checkbox[s].value) {
+            //             checked = true;
+
+            //         }
+            //     }
+            //     checkbox[s].checked = checked;
+            // }
+            var hobbyCheckbox = document.getElementsByName("hob");
+            for (i = 0; i < hobbyCheckbox.length; i++) {
+                if (studentArr[arr].hobbies.includes(hobbyCheckbox[i].value)) {
+                    hobbyCheckbox[i].checked = true;
+                }
+                else {
+                    hobbyCheckbox[i].checked = false;
+                }
+            }
+        }
+        function updateRecord(updaobj) {
+            console.log("updaobj_______", updaobj);
+
+            updateobj = updaobj;
+            console.log("______updateobj", updateobj);
+
+            for (k = 0; k < studentArr.length; k++) {
+                if (studentArr[k].Rollno == updateobj.Rollno) {
+                    studentArr[k] = updateobj;
+                    console.log("studentArr[k]______", studentArr[k]);
+
+
+                }
+                selectedRow = null;
+            }
+            TableData(studentArr);
+        }
+        function resetmethod() {
+            document.getElementById("myform").reset()
+        }
+
+        function deletefunc(deleteid) {
+            console.log("deleteid_______", deleteid);
+            deleteroll = deleteid;
+            console.log("deleteroll________", deleteroll);
+            for (f = 0; f < studentArr.length; f++) {
+                if (studentArr[f].Rollno == deleteroll) {
+                    studentArr.splice(f, 1)  //del one so using 1
+                    break;
+                }
+            }
+            TableData(studentArr);
+        }
+
+    </script>
+</body>
+
+</html>
